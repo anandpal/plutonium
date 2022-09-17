@@ -2,7 +2,7 @@ const internModel = require('../model/internModel')
 const collegeModel = require('../model/collegeModel')
 const validator = require("email-validator");
 const _ = require('lodash');
-const re = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4}$/im;
+const re = /^[\+]?[(]?[6-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4}$/im;
 
 
 
@@ -81,7 +81,7 @@ const createIntern = async (req, res) => {
 
             // ================================== if college not found ==========================================================
 
-            let findAllCollege = await collegeModel.find({ "name": { $regex: collegeName, "$options": "i" } })
+            let findAllCollege = await collegeModel.find({ "name": { $regex: collegeName} })
             if (findAllCollege.length < 1) return res.status(404).send({ status: false, message: "Oppss..!! College not found" })
 
             if (findAllCollege[0].name != collegeName) return res.status(400).send({ status: false, message: "Oh Noo...!! Invalid College Name" })

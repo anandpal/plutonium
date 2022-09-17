@@ -16,6 +16,16 @@ const validName = (val) => {
 
 }
 
+const isValidUrl = urlString=> {
+    var urlPattern = new RegExp('^(https?:\\/\\/)?'+ // validate protocol
+  '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ // validate domain name
+  '((\\d{1,3}\\.){3}\\d{1,3}))'+ // validate OR ip (v4) address
+  '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // validate port and path
+  '(\\?[;&a-z\\d%_.~+=-]*)?'+ // validate query string
+  '(\\#[-a-z\\d_]*)?$','i'); // validate fragment locator
+return !!urlPattern.test(urlString);
+}
+
 // ================================ valid details to fetch the data ===================================================================================
 
 const createCollege = async (req, res) => {
@@ -44,7 +54,10 @@ const createCollege = async (req, res) => {
         if (!logoLink) return res.status(400).send({ status: false, message: "Oppss..!! logo link is required" });
 
         if (!validName(logoLink))
-        return res.status(400).send({ status: false, message: "Oh noo..!! Blank Spaces are not Allowed in name" })
+        return res.status(400).send({ status: false, message: "Oh noo..!! Blank Spaces are not Allowed in logolink" })
+
+        if (!isValidUrl(logoLink))
+        return res.status(400).send({ status: false, message: "Oh noo..!! Invalid Url  !!!" })
 
         // ========================== if name is already used ============================================================
 
